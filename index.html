@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JERA, JARA, JURA - Gestionnaire de Tâches</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .column {
+      min-height: 300px;
+      border: 2px dashed #ccc;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+    }
+    .task {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: move;
+    }
+    .trash {
+      background-color: #ffe6e6;
+      border: 2px dashed #dc3545;
+    }
+  </style>
+</head>
+<body class="bg-light">
+  <div class="container py-4">
+    <h1 class="text-center mb-4">JERA, JARA, JURA - Gestionnaire de Tâches</h1>
+
+    <!-- Formulaire d'ajout -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <form id="taskForm" class="row g-3">
+          <div class="col-md-6">
+            <input type="text" id="taskName" class="form-control" placeholder="Nom de la tâche" required>
+          </div>
+          <div class="col-md-3">
+            <select id="taskPriority" class="form-select" required>
+              <option value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-primary w-100">Ajouter Tâche</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Filtres -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <select id="filterStatus" class="form-select">
+              <option value="ALL">Tous les statuts</option>
+              <option value="TO DO">TO DO</option>
+              <option value="IN PROGRESS">IN PROGRESS</option>
+              <option value="IN REVIEW">IN REVIEW</option>
+              <option value="DONE">DONE</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <select id="filterPriority" class="form-select">
+              <option value="ALL">Toutes les priorités</option>
+              <option value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colonnes des statuts -->
+    <div class="row text-center mb-4">
+      <div class="col-md-3">
+        <h4>TO DO</h4>
+        <div id="todo" class="column" data-status="TO DO"></div>
+      </div>
+      <div class="col-md-3">
+        <h4>IN PROGRESS</h4>
+        <div id="inprogress" class="column" data-status="IN PROGRESS"></div>
+      </div>
+      <div class="col-md-3">
+        <h4>IN REVIEW</h4>
+        <div id="inreview" class="column" data-status="IN REVIEW"></div>
+      </div>
+      <div class="col-md-3">
+        <h4>DONE</h4>
+        <div id="done" class="column" data-status="DONE"></div>
+      </div>
+    </div>
+
+    <!-- Corbeille -->
+    <div class="card">
+      <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+        <span>🗑️ Corbeille</span>
+        <button id="emptyTrash" class="btn btn-light btn-sm">Vider la corbeille</button>
+      </div>
+      <div class="card-body trash column" id="trash"></div>
+    </div>
+  </div>
+
+  <!-- Modal de modification -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="editForm" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modifier la tâche</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editTaskId">
+          <div class="mb-3">
+            <label for="editTaskName" class="form-label">Nom</label>
+            <input type="text" class="form-control" id="editTaskName" required>
+          </div>
+          <div class="mb-3">
+            <label for="editTaskPriority" class="form-label">Priorité</label>
+            <select class="form-select" id="editTaskPriority">
+              <option value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Sauvegarder</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
